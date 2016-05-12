@@ -1,2 +1,2 @@
-PKG_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
-PKG_CPPFLAGS =  -I../inst/include/
+PKG_LIBS = -L"C:/Program Files/Geosupport Desktop Edition/Bin" -lNYCgeo 
+PKG_CPPFLAGS =  -I"C:/Program Files/Geosupport Desktop Edition/Include" -I"C:/Program Files/R/R-3.2.5/library/BH/include"
