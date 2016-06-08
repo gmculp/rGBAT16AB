@@ -19,7 +19,7 @@ using namespace Rcpp;
 
 
 // [[Rcpp::export]]
-DataFrame GC_test(DataFrame x, std::string id_col, std::string add_col, std::string boro_col) {
+DataFrame GBAT(DataFrame x, std::string id_col, std::string add_col, std::string boro_col) {
 
   //array of county codes for calculating census geographies
   String cty_code[] = {"na", "061", "005", "047", "081", "085"};
@@ -49,6 +49,11 @@ DataFrame GC_test(DataFrame x, std::string id_col, std::string add_col, std::str
   std::vector<std::string> ct_2010 (id_vec.size());
   std::vector<std::string> cb_2010 (id_vec.size());
   std::vector<std::string> out_NTA (id_vec.size());
+
+  std::vector<std::string> error_1E (id_vec.size());
+  std::vector<std::string> error_AP (id_vec.size());
+  std::vector<std::string> GRC_1E (id_vec.size());
+  std::vector<std::string> GRC_AP (id_vec.size());
 
   for (int i = 0; i < id_vec.size() ; i++) {
 
@@ -111,94 +116,107 @@ DataFrame GC_test(DataFrame x, std::string id_col, std::string add_col, std::str
     NYCgeo(uwa1.cwa1, uwa2f1ex.cwa2f1ex);
     NYCgeo(uwa1_ap.cwa1_ap, uwa2fapx.cwa2fapx);
 
-    //check the return code
-    //printf("\n\nFunction 1E GRC = %.2s\n"  "Error Message = %.80s\n", uwa1.wa1.output.ret_code, uwa1.wa1.output.msg);
-
     //if successful, process data
     if ((memcmp(uwa1.wa1.output.ret_code, "00", 2) == 0)  || (memcmp(uwa1.wa1.output.ret_code, "01", 2) == 0)) {
 
-      //AP viable
+      //if AP viable
       if ((memcmp(uwa1_ap.wa1_ap.output.ret_code, "00", 2) == 0)  ||  (memcmp(uwa1_ap.wa1_ap.output.ret_code, "01", 2) == 0)) {
 
-        //printf("AP = %.9s\n", uwa2fapx.wa2_fapx.ap_id);
         std::string a_p_var;
         a_p_var = uwa2fapx.wa2_fapx.ap_id;
         a_p_var = a_p_var.substr (0,9);
         a_p[i] = a_p_var;
 
-        //printf("BIN1 = %.7s\n", uwa2fapx.wa2_fapx.bld_id);
       }
 
-      //printf("latitude = %.9s\n", uwa2f1ex.wa2_f1ex.latitude);
+      //process function AP error message
+      std::string GRC_AP_var;
+      GRC_AP_var = uwa1_ap.wa1_ap.output.ret_code;
+      GRC_AP_var = GRC_AP_var.substr (0,2);
+      boost::algorithm::trim(GRC_AP_var);
+
+      std::string error_AP_var;
+      error_AP_var = uwa1_ap.wa1_ap.output.msg;
+      error_AP_var = error_AP_var.substr (0,80);
+      boost::algorithm::trim(error_AP_var);
+
+      if (error_AP_var.length()>0){
+        error_AP[i] = GRC_AP_var + std::string(" ") + error_AP_var;
+      }
+      else {
+        error_AP[i] = "";
+      }
+
+      //latitude
       std::string out_lat_var;
       out_lat_var = uwa2f1ex.wa2_f1ex.latitude;
       out_lat_var = out_lat_var.substr (0,9);
       out_lat[i] = out_lat_var;
 
-      //printf("longitude = %.11s\n", uwa2f1ex.wa2_f1ex.longitude);
+      //longitude
       std::string out_lng_var;
       out_lng_var = uwa2f1ex.wa2_f1ex.longitude;
       out_lng_var = out_lng_var.substr (0,10);
       out_lng[i] = out_lng_var;
 
-      //printf("CITY = %.25s\n", uwa2f1ex.wa2_f1ex.USPS_city_name);
+      //USPS city name
       std::string USPS_city_var;
       USPS_city_var = uwa2f1ex.wa2_f1ex.USPS_city_name;
       USPS_city_var = USPS_city_var.substr (0,25);
       boost::algorithm::trim(USPS_city_var);
       USPS_city[i] = USPS_city_var;
 
-      //printf("BBL = %.10s\n", uwa1.wa1.output.bblo);
+      //BBL
       std::string out_bbl_var;
       out_bbl_var = uwa1.wa1.output.bblo.bbl;
       out_bbl_var = out_bbl_var.substr (0,10);
       out_bbl[i] = out_bbl_var;
 
-      //printf("BIN2 = %.7s\n", uwa1.wa1.output.bin);
+      //BIN
       std::string out_bin_var;
       out_bin_var = uwa1.wa1.output.bin;
       out_bin_var = out_bin_var.substr (0,7);
       out_bin[i] = out_bin_var;
 
-      //printf("HOUSE NUMBER = %.16s\n", uwa1.wa1.output.hse_nbr_disp);
+      //house number
       std::string hse_nbr_var;
       hse_nbr_var = uwa1.wa1.output.hse_nbr_disp;
       hse_nbr_var = hse_nbr_var.substr (0,16);
       boost::algorithm::trim(hse_nbr_var);
       hse_nbr[i] = hse_nbr_var;
 
-      //printf("STREET = %.32s\n", uwa2f1ex.wa2_f1ex.BOE_st_name);
+      //street
       std::string BOE_St_var;
       BOE_St_var = uwa2f1ex.wa2_f1ex.BOE_st_name;
       BOE_St_var = BOE_St_var.substr (0,32);
       boost::algorithm::trim(BOE_St_var);
       BOE_St[i] = BOE_St_var;
 
-      //printf("zip code = %.5s\n", uwa2f1ex.wa2_f1ex.cwa2f1v.c_wa2_f1.zip_code);
+      //zip code
       std::string z_c_var;
       z_c_var = uwa2f1ex.wa2_f1ex.cwa2f1v.c_wa2_f1.zip_code;
       z_c_var = z_c_var.substr (0,5);
       z_c[i] = z_c_var;
 
-      //printf("NTA = %.4s\n", uwa2f1ex.wa2_f1ex.cwa2f1v.c_wa2_f1.nta);
+      //NTA
       std::string out_NTA_var;
       out_NTA_var = uwa2f1ex.wa2_f1ex.cwa2f1v.c_wa2_f1.nta;
       out_NTA_var = out_NTA_var.substr (0,4);
       out_NTA[i] = out_NTA_var;
 
-      //printf("CD = %.3s\n", uwa2f1ex.wa2_f1ex.cwa2f1v.c_wa2_f1.com_dist);
+      //community district
       std::string out_CD_var;
       out_CD_var = uwa2f1ex.wa2_f1ex.cwa2f1v.c_wa2_f1.com_dist;
       out_CD_var = out_CD_var.substr (0,3);
       out_CD[i] = out_CD_var;
 
-      //printf("x_coor = %.7s\n", uwa2f1ex.wa2_f1ex.cwa2f1v.c_wa2_f1.coord[0]);
+      //x coordinate
       std::string out_x_var;
       out_x_var = uwa2f1ex.wa2_f1ex.cwa2f1v.c_wa2_f1.coord[0];
       out_x_var = out_x_var.substr (0,7);
       out_x[i] = out_x_var;
 
-      //printf("y_coor = %.7s\n", uwa2f1ex.wa2_f1ex.cwa2f1v.c_wa2_f1.coord[1]);
+      //y coordinate
       std::string out_y_var;
       out_y_var = uwa2f1ex.wa2_f1ex.cwa2f1v.c_wa2_f1.coord[1];
       out_y_var = out_y_var.substr (0,7);
@@ -237,14 +255,49 @@ DataFrame GC_test(DataFrame x, std::string id_col, std::string add_col, std::str
 
   }
 
-  //if not successful, display error message
-  //  else{
+    //process function 1E error message
+    std::string GRC_1E_var;
+    GRC_1E_var = uwa1.wa1.output.ret_code;
+    GRC_1E_var = GRC_1E_var.substr (0,2);
+    boost::algorithm::trim(GRC_1E_var);
 
-  //  }
+    std::string error_1E_var;
+    error_1E_var = uwa1.wa1.output.msg;
+    error_1E_var = error_1E_var.substr (0,80);
+    boost::algorithm::trim(error_1E_var);
+
+    if (error_1E_var.length()>0){
+      error_1E[i] = GRC_1E_var + std::string(" ") + error_1E_var;
+    }
+    else {
+      error_1E[i] = "";
+    }
+
   }
-  //return(x);
-  return Rcpp::DataFrame::create( Named(id_col)= id_vec, Named(add_col)= add_vec, Named(boro_col) = boro_vec, Named("out_house_num") = hse_nbr, Named("out_street") = BOE_St, Named("out_city") = USPS_city,
-                                  Named("out_zip_code") = z_c, Named("out_AP_ID") = a_p, Named("out_BIN") = out_bin, Named("out_BBL") = out_bbl, Named("out_CD") = out_CD,
-                                  Named("out_x") = out_x, Named("out_y") = out_y, Named("out_lng") = out_lng, Named("out_lat") = out_lat,
-                                  Named("out_cb_2000") = cb_2000, Named("out_ct_2000") = ct_2000, Named("out_cb_2010") = cb_2010, Named("out_ct_2010") = ct_2010, Named("out_NTA") = out_NTA);
+  //RCPP limits maxinum number of returned fields to n=10
+  return Rcpp::DataFrame::create( Named(id_col)= id_vec
+                                  , Named(add_col)= add_vec
+                                  , Named(boro_col) = boro_vec
+                                  , Named("out_house_num") = hse_nbr
+                                  , Named("out_street") = BOE_St
+                                  , Named("out_city") = USPS_city
+                                  , Named("out_zip_code") = z_c
+                                  , Named("out_AP_ID") = a_p
+                                  , Named("out_BIN") = out_bin
+                                  , Named("out_BBL") = out_bbl
+                                  , Named("out_CD") = out_CD
+                                  , Named("out_x") = out_x
+                                  , Named("out_y") = out_y
+                                  , Named("out_lng") = out_lng
+                                  , Named("out_lat") = out_lat
+                                  , Named("out_cb_2000") = cb_2000
+                                  //, Named("out_ct_2000") = ct_2000
+                                  , Named("out_cb_2010") = cb_2010
+                                  //, Named("out_ct_2010") = ct_2010
+                                  , Named("out_NTA") = out_NTA
+                                  //, Named("out_GRC_1E") = GRC_1E
+                                  , Named("out_error_1E") = error_1E
+                                  //, Named("out_GRC_AP") = GRC_AP
+                                  , Named("out_error_AP") = error_AP
+                                  );
 }
