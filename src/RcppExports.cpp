@@ -5,13 +5,17 @@
 
 using namespace Rcpp;
 
-// GC_test
-String GC_test();
-RcppExport SEXP GBAT1_GC_test() {
+// GBAT
+DataFrame GBAT(DataFrame x, std::string id_col, std::string add_col, std::string boro_col);
+RcppExport SEXP rGBAT16A_GBAT(SEXP xSEXP, SEXP id_colSEXP, SEXP add_colSEXP, SEXP boro_colSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    __result = Rcpp::wrap(GC_test());
+    Rcpp::traits::input_parameter< DataFrame >::type x(xSEXP);
+    Rcpp::traits::input_parameter< std::string >::type id_col(id_colSEXP);
+    Rcpp::traits::input_parameter< std::string >::type add_col(add_colSEXP);
+    Rcpp::traits::input_parameter< std::string >::type boro_col(boro_colSEXP);
+    __result = Rcpp::wrap(GBAT(x, id_col, add_col, boro_col));
     return __result;
 END_RCPP
 }
