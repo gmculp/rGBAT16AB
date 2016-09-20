@@ -1,15 +1,15 @@
 Package: rGBAT16AB
-Type: Package
+Version: 16.2
 Title: GeoSupport for R
-Version: 16AB
+Description: R implementation of the New York City Department of City Planning's (NYC DCP) Geosupport geocoding application.
 Date: 2016-09-20
 Authors@R: person("GM", "Culp", , "gculp@health.nyc.gov", c("aut", "cre"))
 URL: https://github.com/gmculp/rGBAT16AB
-Description: R implementation of the New York City Department of City Planning's (NYC DCP) Geosupport geocoding application.
-License: MIT
-LazyData: TRUE
-Depends: R (>= 3.0.0),
+BugReports: https://github.com/gmculp/rGBAT16AB/issues
+Depends:
+    R (>= 3.0.0)
 Imports:
     Rcpp (>= 0.12.2)
-LinkingTo:
-    Rcpp
+LinkingTo: Rcpp
+License: MIT
+LazyData: TRUE
