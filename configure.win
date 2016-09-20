@@ -1,0 +1,22 @@
+if test -z "${GEOFILES}"; then
+  echo "Please install Geosupport Software"
+  exit 1
+fi
+
+
+GC_ROOT="$(echo ${GEOFILES} | sed 's/\\/\//g')"
+GBAT_PATH="$(echo ${GC_ROOT} | sed 's/\/fls\///g')"
+
+#deal with dll capitalization
+if [ -e "${GBAT_PATH}/Bin/NYCGEO.DLL" ]; then
+  GBAT_DLL="NYCGEO"
+elif [ -e "${GBAT_PATH}/Bin/NYCgeo.dll" ]; then
+  GBAT_DLL="NYCgeo"
+else
+  echo "Please reinstall Geosupport Software"
+  exit 1
+fi
+
+# replace all in Makevars.win
+sed -e "s#@GBAT_PATH@#${GBAT_PATH}#g" -e "s#@GBAT_DLL@#${GBAT_DLL}#g"  \
+src/Makevars.win.in > src/Makevars.win
