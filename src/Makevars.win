@@ -1,4 +1,0 @@
-##path 1 = location of NYCgeo.dll file after GBAT install
-PKG_LIBS = -L"C:/Program Files/Geosupport Desktop Edition/Bin" -lNYCgeo 
-##path 1 = location of NYCgeo.h and pac.h files after GBAT install; path 2 = location of Boost package header file
-PKG_CPPFLAGS =  -I"C:/Program Files/Geosupport Desktop Edition/Include" -I"C:/Program Files/R/R-3.2.5/library/BH/include"
