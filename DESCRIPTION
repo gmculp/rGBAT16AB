@@ -4,6 +4,7 @@ Title: GeoSupport for R
 Version: 16AB
 Date: 2016-09-20
 Authors@R: person("GM", "Culp", , "gculp@health.nyc.gov", c("aut", "cre"))
+URL: https://github.com/gmculp/rGBAT16AB
 Description: R implementation of the New York City Department of City Planning's (NYC DCP) Geosupport geocoding application.
 License: MIT
 LazyData: TRUE
