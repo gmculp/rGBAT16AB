@@ -8,4 +8,4 @@ This package is currently in development.  At present, the package only works on
         ```
 Functions:
 
-* `GC_df(in_df,id_colname,addr_colname,borough_code_colname)` accepts an input data frame and column names for unique id, address and borough code fields.
+* `GC_df(x,id_col,addr_col,boro_col)` accepts an input data frame and column names for unique id, address and borough code fields.
