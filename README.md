@@ -4,6 +4,7 @@ An approach to using [NYC DCP's geocoder](http://www1.nyc.gov/site/planning/data
 This package is currently in development.  At present, the package only works on Windows 64-bit machines. Requires devtools and RCPP to build from within RStudio.
 
         ```R
+        #install package
         devtools::install_github("gmculp/rGBAT16AB")
         #load package
         library(rGBAT16AB)
