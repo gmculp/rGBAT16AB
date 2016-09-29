@@ -5,6 +5,19 @@ This package is currently in development.  At present, the package only works on
 
         ```R
         devtools::install_github("gmculp/rGBAT16AB")
+        #load package
+        library(rGBAT16AB)
+
+        #create test data frame
+        ADDR1 <- c("125 WORTH STREET","42-09 28 ST","250 BEDFORD PARK BLVD W","30 LAFAYETTE AVE")
+        #1=MANHATTAN/NEW YORK; 2=BRONX; 3=BROOKLYN/KINGS, 4=QUEENS, 5=STATEN ISLAND/RICHMOND
+        BORO <- c(1,4,2,3)
+        u_id <- 1:length(ADDR1)
+        df = data.frame(u_id, ADDR1, BORO) 
+
+        #geocode test data frame with geocoding package
+        #first use might take a few seconds
+        df2 <- GC_df(df,'u_id','ADDR1','BORO')
         ```
 Functions:
 
