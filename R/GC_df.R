@@ -6,7 +6,7 @@ GC_df <- function(x, id_col, add_col, boro_col) {
   out_df <- GBAT(x, id_col, add_col, boro_col)
 
 
-
+  #More output fields to come...
   out_df$GC_X_COOR <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", substr(out_df$out_all2, 127, 133), perl=TRUE)
   out_df$GC_Y_COOR <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", substr(out_df$out_all2, 134, 140), perl=TRUE)
 
