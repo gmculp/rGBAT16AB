@@ -3,6 +3,16 @@ GBAT_PATH = @GBAT_PATH@
 GBAT_DLL = @GBAT_DLL@
 
 ##path 1 = location of NYCgeo.dll file after GBAT install
-PKG_LIBS = -L"$(GBAT_PATH)/Bin"  -l$(GBAT_DLL)
+PKG_LIBS =  -L"$(GBAT_PATH)/Bin" -l$(GBAT_DLL)
+
 ##path 1 = location of NYCgeo.h and pac.h files after GBAT install
 PKG_CPPFLAGS =  -I"$(GBAT_PATH)/Include"
+
+##if running WIN32, remove decoration
+ifeq "${R_ARCH}" "/i386"
+  $(SHLIB): $(OBJECTS) NYCGEO.a
+
+ NYCGEO.a: NYCGEO.def
+	$(DLLTOOL) -k -d NYCGEO.def -l NYCGEO.a -D "$(GBAT_PATH)/Bin/$(GBAT_DLL)" $(DT_ARCH)
+endif
+
