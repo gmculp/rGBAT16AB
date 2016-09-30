@@ -8,6 +8,10 @@ Functions:
 * `GC_df(x,id_col,addr_col,boro_col)` accepts an input data frame and column names for unique id, address and borough code fields.
 
         ```R
+        #requires devtools
+        library(devtools)
+        #make sure Rtools is TRUE
+        devtools::find_rtools()
         #install package
         devtools::install_github("gmculp/rGBAT16AB")
         #load package
