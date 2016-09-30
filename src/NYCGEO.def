@@ -1,0 +1,4 @@
+LIBRARY     NYCGEO.DLL
+
+EXPORTS
+    NYCgeo@8
