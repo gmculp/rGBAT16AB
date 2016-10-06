@@ -6,7 +6,7 @@
 #'
 #' @title Geocode NYC addresses with zip code
 #' @name GBAT.zip_code
-#' @aliases GBAT.zip_code rGBAT16AB
+#' @aliases GBAT.zip_code
 #' @export GBAT.zip_code
 #' @param input_df a data frame containing NYC address
 #' @param id_colname the column name of an arbitrary unique identifier
