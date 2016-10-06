@@ -23,6 +23,7 @@ If you are behind a web proxy (NYC.gov employees):
         library(RCurl)
         library(httr)
         library(devtools)
+	library(withr) #imported when devtools is installed
         set_config( config( ssl_verifypeer = 0L ) )
         #check web browser options for your proxy
         my_proxy <- "myproxy.nyc"
