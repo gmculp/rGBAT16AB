@@ -2,7 +2,6 @@
 % Please edit documentation in R/GBAT.zip_code.R
 \name{GBAT.zip_code}
 \alias{GBAT.zip_code}
-\alias{rGBAT16AB}
 \title{Geocode NYC addresses with zip code}
 \usage{
 GBAT.zip_code(input_df, id_colname, address_colname, zip_code_colname)

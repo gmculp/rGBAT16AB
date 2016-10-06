@@ -2,7 +2,6 @@
 % Please edit documentation in R/GBAT.borough_code.R
 \name{GBAT.borough_code}
 \alias{GBAT.borough_code}
-\alias{rGBAT16AB}
 \title{Geocode NYC addresses with borough code}
 \usage{
 GBAT.borough_code(input_df, id_colname, address_colname, borough_code_colname)
