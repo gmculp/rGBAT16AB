@@ -24,7 +24,7 @@ If you are behind a web proxy (NYC.gov employees):
         library(httr)
         library(devtools)
         set_config( config( ssl_verifypeer = 0L ) )
-        #check web browser options for your 
+        #check web browser options for your proxy
         my_proxy <- "myproxy.nyc"
         set_config(
                 use_proxy(url=my_proxy, port=8080, username=Sys.getenv("USERNAME"),password=.rs.askForPassword("Enter password:"))
