@@ -3,9 +3,7 @@ An approach to using [NYC DCP's geocoder](http://www1.nyc.gov/site/planning/data
 
 This package is currently in development.  At present, the package only works on Windows 32-bit and 64-bit machines. Requires devtools and RCPP to build from within RStudio.
 
-Functions:
-
-* `GC_df(x,id_col,addr_col,boro_col)` accepts an input data frame and column names for unique id, address and borough code fields.
+Installing the package:
 
         ```R
         #requires devtools
@@ -16,16 +14,37 @@ Functions:
         devtools::install_github("gmculp/rGBAT16AB")
         #load package
         library(rGBAT16AB)
-
-        #create test data frame
-        ADDR1 <- c("125 WORTH STREET","42-09 28 ST","250 BEDFORD PARK BLVD W","30 LAFAYETTE AVE")
-        #1=MANHATTAN/NEW YORK; 2=BRONX; 3=BROOKLYN/KINGS, 4=QUEENS, 5=STATEN ISLAND/RICHMOND
-        BORO <- c(1,4,2,3)
-        u_id <- 1:length(ADDR1)
-        df = data.frame(u_id, ADDR1, BORO) 
-
-        #geocode test data frame with geocoding package
-        #first use might take a few seconds
-        df2 <- GC_df(df,'u_id','ADDR1','BORO')
         ```
 
+If you are behind a web proxy (NYC.gov employees):
+
+        ```R
+        #load libraries
+        library(RCurl)
+        library(httr)
+        library(devtools)
+        set_config( config( ssl_verifypeer = 0L ) )
+        #check web browser options for your 
+        my_proxy <- "myproxy.nyc"
+        set_config(
+                use_proxy(url=my_proxy, port=8080, username=Sys.getenv("USERNAME"),password=.rs.askForPassword("Enter password:"))
+        )
+        options(unzip = 'internal')
+        pack_loc <- "gmculp/rGBAT16AB"
+        #install package hosted on GitHub
+        #check if default library path is local
+        #if not, check if R install is local
+        #if not, specify local drive
+        if (grepl("^[[:alpha:]]{1}:/",.libPaths()[1])){
+	        devtools::install_github(pack_loc)
+        } else if (grepl("^[[:alpha:]]{1}:/",Sys.getenv("R_HOME"))) {
+	        install_lib <- paste0(Sys.getenv("R_HOME"),"/library")
+	        withr::with_libpaths(new=install_lib, devtools::install_github(pack_loc), action="replace")
+        } else {
+	        #specify local drive
+	        install_lib <- 'J:/R_libraries'
+	        withr::with_libpaths(new=install_lib, devtools::install_github(pack_loc), action="replace")
+        }
+        #load package
+        library(rGBAT16AB)
+        ```
