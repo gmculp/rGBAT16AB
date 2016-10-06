@@ -1,3 +1,6 @@
 exportPattern("^[[:alpha:]]+")
 importFrom(Rcpp, evalCpp)
 useDynLib(rGBAT16AB)
+export(GBAT.borough_code)
+export(GBAT.zip_code)
+
