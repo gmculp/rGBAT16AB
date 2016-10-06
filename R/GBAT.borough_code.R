@@ -6,7 +6,7 @@
 #'
 #' @title Geocode NYC addresses with borough code
 #' @name GBAT.borough_code
-#' @aliases GBAT.borough_code rGBAT16AB
+#' @aliases GBAT.borough_code
 #' @export GBAT.borough_code
 #' @param input_df a data frame containing NYC address
 #' @param id_colname the column name of an arbitrary unique identifier
