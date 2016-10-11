@@ -14,12 +14,16 @@ GBAT_df <- function(x, id_col, add_col, third_col, third_col_type) {
                                                           ifelse(out_df[['F1E_CensusBoro']]==4,'36081',
                                                                  ifelse(out_df[['F1E_CensusBoro']]==5,'36085',"")))))
 
-  out_df[['F1E_1990_USCBTract']] <- ifelse(out_df[['F1E_USCBStateCounty']]!="", paste0(out_df[['F1E_USCBStateCounty']], sprintf("%06d", as.numeric(out_df[['F1E_1990CensusTract']]))),"")
-  out_df[['F1E_2000_USCBTract']] <- ifelse(out_df[['F1E_USCBStateCounty']]!="", paste0(out_df[['F1E_USCBStateCounty']], sprintf("%06d", as.numeric(out_df[['F1E_2000CensusTract']]))),"")
-  out_df[['F1E_2010_USCBTract']] <- ifelse(out_df[['F1E_USCBStateCounty']]!="", paste0(out_df[['F1E_USCBStateCounty']], sprintf("%06d", as.numeric(out_df[['F1E_2010CensusTract']]))),"")
 
-  out_df[['F1E_2000_USCBBlock']] <- ifelse(out_df[['F1E_USCBStateCounty']]!="", paste0(out_df[['F1E_2000_USCBTract']], sprintf("%04d", as.numeric(out_df[['F1E_2000CensusBlock']])), out_df[['F1E_2000CensusBlockSuffix']]),"")
-  out_df[['F1E_2010_USCBBlock']] <- ifelse(out_df[['F1E_USCBStateCounty']]!="", paste0(out_df[['F1E_2010_USCBTract']], sprintf("%04d", as.numeric(out_df[['F1E_2010CensusBlock']])), out_df[['F1E_2010CensusBlockSuffix']]),"")
+
+
+
+  out_df[['F1E_1990_USCBTract']] <- ifelse(grepl("^[[:digit:]]$",out_df[['F1E_USCBStateCounty']]) & grepl("^[[:digit:]]$",out_df[['F1E_1990CensusTract']]), paste0(out_df[['F1E_USCBStateCounty']], sprintf("%06d", as.numeric(out_df[['F1E_1990CensusTract']]))),"")
+  out_df[['F1E_2000_USCBTract']] <- ifelse(grepl("^[[:digit:]]$",out_df[['F1E_USCBStateCounty']]) & grepl("^[[:digit:]]$",out_df[['F1E_2000CensusTract']]), paste0(out_df[['F1E_USCBStateCounty']], sprintf("%06d", as.numeric(out_df[['F1E_2000CensusTract']]))),"")
+  out_df[['F1E_2010_USCBTract']] <- ifelse(grepl("^[[:digit:]]$",out_df[['F1E_USCBStateCounty']]) & grepl("^[[:digit:]]$",out_df[['F1E_2010CensusTract']]), paste0(out_df[['F1E_USCBStateCounty']], sprintf("%06d", as.numeric(out_df[['F1E_2010CensusTract']]))),"")
+
+  out_df[['F1E_2000_USCBBlock']] <- ifelse(grepl("^[[:digit:]]$",out_df[['F1E_2000_USCBTract']]) & grepl("^[[:digit:]]$",out_df[['F1E_2000CensusBlock']]), paste0(out_df[['F1E_2000_USCBTract']], sprintf("%04d", as.numeric(out_df[['F1E_2000CensusBlock']])), out_df[['F1E_2000CensusBlockSuffix']]),"")
+  out_df[['F1E_2010_USCBBlock']] <- ifelse(grepl("^[[:digit:]]$",out_df[['F1E_2010_USCBTract']]) & grepl("^[[:digit:]]$",out_df[['F1E_2010CensusBlock']]), paste0(out_df[['F1E_2010_USCBTract']], sprintf("%04d", as.numeric(out_df[['F1E_2010CensusBlock']])), out_df[['F1E_2010CensusBlockSuffix']]),"")
 
   #remove space deliminated output
   out_df$F1A_output <- NULL
