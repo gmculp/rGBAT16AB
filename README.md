@@ -36,16 +36,20 @@ If you are behind a web proxy (NYC.gov employees):
         #check if default library path is local
         #if not, check if R install is local
         #if not, specify local drive
-        if (grepl("^[[:alpha:]]{1}:/",.libPaths()[1])){
-	        devtools::install_github(pack_loc)
-        } else if (grepl("^[[:alpha:]]{1}:/",Sys.getenv("R_HOME"))) {
-	        install_lib <- paste0(Sys.getenv("R_HOME"),"/library")
-	        withr::with_libpaths(new=install_lib, devtools::install_github(pack_loc), action="replace")
-        } else {
-	        #specify local drive
-	        install_lib <- 'J:/R_libraries'
-	        withr::with_libpaths(new=install_lib, devtools::install_github(pack_loc), action="replace")
-        }
+	if (devtools::find_rtools()) {
+        	if (grepl("^[[:alpha:]]{1}:/",.libPaths()[1])){
+	        	devtools::install_github(pack_loc)
+        	} else if (grepl("^[[:alpha:]]{1}:/",Sys.getenv("R_HOME"))) {
+	        	install_lib <- paste0(Sys.getenv("R_HOME"),"/library")
+	        	withr::with_libpaths(new=install_lib, devtools::install_github(pack_loc), action="replace")
+        	} else {
+	        	#specify local drive
+	        	install_lib <- 'J:/R_libraries'
+	        	withr::with_libpaths(new=install_lib, devtools::install_github(pack_loc), action="replace")
+        	}
+	} else {
+		cat("INSTALL RTOOLS!")
+	}
         #load package
         library(rGBAT16AB)
         ```
