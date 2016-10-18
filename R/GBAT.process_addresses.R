@@ -31,7 +31,7 @@ GBAT.process_addresses <- function(in_df, add_col_name, third_col_name, source_c
 	cat(paste0(round((nrow(GC_df)/as.numeric(p2[3])), digits = 0)," records per second", "\n"))
 	
 	#in order to lighten load on merge, discard extraneous columns
-	keep_col <- c(c(add_col_name,third_col_name),gc_cols)
+	keep_col <- c(c(add_col_name,third_col_name),geocode_cols)
 	GC_df <- GC_df[,keep_col]
 	
 	#join back to original
