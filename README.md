@@ -24,6 +24,11 @@ If you are behind a web proxy (NYC.gov employees):
         library(httr)
         library(devtools)
 	library(withr)
+	library(Rcpp)
+	
+	#does Rtools work with Rcpp
+	Rcpp::evalCpp("2+2")
+	
         set_config( config( ssl_verifypeer = 0L ) )
         #check web browser options for your proxy
         my_proxy <- "myproxy.nyc"
