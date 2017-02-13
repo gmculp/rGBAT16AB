@@ -31,7 +31,7 @@ GBAT_census_format <- function(x) {
   x[['F1E_2000_USCBTract']] <- gsub("^0.*$","",paste0(as.character(x[['F1E_USCBStateCounty']]), sprintf("%06d", as.numeric(paste0('0', gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", x[['F1E_2000CensusTract']], perl=TRUE))))))
   x[['F1E_2010_USCBTract']] <- gsub("^0.*$","",paste0(as.character(x[['F1E_USCBStateCounty']]), sprintf("%06d", as.numeric(paste0('0', gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", x[['F1E_2010CensusTract']], perl=TRUE))))))
 
-  x[['F1E_2000_USCBBlock']] <- gsub("^0.*$","",paste0(as.character(x[['F1E_1990_USCBTract']]), sprintf("%04d", as.numeric(paste0('0', gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", x[['F1E_2000CensusBlock']], perl=TRUE)))),x[['F1E_2000CensusBlockSuffix']]))
+  x[['F1E_2000_USCBBlock']] <- gsub("^0.*$","",paste0(as.character(x[['F1E_2000_USCBTract']]), sprintf("%04d", as.numeric(paste0('0', gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", x[['F1E_2000CensusBlock']], perl=TRUE)))),x[['F1E_2000CensusBlockSuffix']]))
   x[['F1E_2010_USCBBlock']] <- gsub("^0.*$","",paste0(as.character(x[['F1E_2010_USCBTract']]), sprintf("%04d", as.numeric(paste0('0', gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", x[['F1E_2010CensusBlock']], perl=TRUE)))),x[['F1E_2010CensusBlockSuffix']]))
   return(x)
 }
